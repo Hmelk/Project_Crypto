@@ -1,0 +1,142 @@
+<resources>
+    <string name="app_name">Project_Crypto</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_author">About author</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+    <!--My Strings-->
+
+
+    <string-array name="type">
+        <item>Text</item>
+        <item>Image</item>
+        <item>File</item>
+    </string-array>
+
+    <string-array name="method_encrypted">
+        <item>Aes-128</item>
+        <item>RSA</item>
+        <item>BlowFish</item>
+    </string-array>
+
+    <string-array name="type_encrypted">
+        <item>By phone</item>
+        <item>By GPS</item>
+        <item>Self Key</item>
+        <item>By time</item>
+    </string-array>
+
+    <string name="aes_128">AES-128</string>
+    <string name="rsa">RSA</string>
+    <string name="blowfish">BlowFish</string>
+
+    <string name="by_phone">Encrypt by phone</string>
+    <string name="by_gps">Encrypt by GPS</string>
+    <string name="self_key">Self Key</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="default_text">To-do</string>
+    <string name="add_text">Text</string>
+    <string name="add_image">Image</string>
+    <string name="add_file">File</string>
+    <string name="add_existing">Open</string>
+    <string name="title_activity_message">MessageActivity</string>
+
+
+    <string name="linear_example_label">Linear example with headers and footers</string>
+    <string name="grid_example_label">Grid two types example</string>
+    <string name="simple_example_label">Grid SimpleAdapter example</string>
+    <string name="parallax_example_label">Parallax example</string>
+    <string name="filter_example_label">Filter example</string>
+
+    <!-- Linear example-->
+    <string name="linear_example_header_1">Header 1</string>
+    <string name="linear_example_header_2">Header 2</string>
+    <string name="linear_example_footer_1">Footer 1</string>
+    <string name="linear_example_footer_2">Footer 2</string>
+    <string name="linear_example_item_move_to_top">Move to top</string>
+    <string name="linear_example_item_remove">Remove</string>
+    <string name="linear_example_item_up">Up</string>
+    <string name="linear_example_item_down">Down</string>
+    <string name="linear_example_header_add">Add</string>
+    <string name="linear_example_header_clear">Clear</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_view_item">ViewItemActivity</string>
+    <string name="title_refactor">Refactor</string>
+    <string name="title_share">Share</string>
+    <string name="title_delete">Delete</string>
+
+</resources>
