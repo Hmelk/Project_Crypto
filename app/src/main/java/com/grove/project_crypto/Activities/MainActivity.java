@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements JsonSaver, Linear
     public void OnItemClick(int position) {
         Intent intent = new Intent(MainActivity.this, ViewItemActivity.class);
         intent.putExtra(CryptoClass.class.getSimpleName(), linearAdapter.getItem(position));
+        intent.putExtra("Position",position);
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_right, R.anim.alpha);
     }

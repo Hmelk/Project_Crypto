@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_reafactor"
         android:icon="@drawable/ic_pen_24dp"
         android:title="@string/title_refactor" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_share"
         android:icon="@drawable/ic_share_24dp"
         android:title="@string/title_share" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_delete"
         android:icon="@drawable/ic_can_24dp"
         android:title="@string/title_delete" />
 
