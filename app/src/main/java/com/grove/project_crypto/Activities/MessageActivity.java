@@ -33,7 +33,7 @@ import com.grove.project_crypto.R;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -141,7 +141,7 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
     public void onSave(View v) {
         CryptoList = new LinkedList<>();
         Import();
-        CryptoList.addFirst(new CryptoClass("Example", MethodEncryptedItems.get(ChipherPager.getCurrentItem()).getValue(), Ct, "12.11.2018", Arrays.toString(secretKey.getEncoded())));
+        CryptoList.addFirst(new CryptoClass("Example", MethodEncryptedItems.get(ChipherPager.getCurrentItem()).getValue(),'I', Ct, new Date(), secretKey.getEncoded().toString()));
 
         Export();
         Intent intent = new Intent(this, MainActivity.class);
@@ -200,7 +200,7 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(128);
             secretKey = keyGenerator.generateKey();
-            etSecretKey.setText(Arrays.toString(secretKey.getEncoded()));
+            etSecretKey.setText(secretKey.getEncoded().toString());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

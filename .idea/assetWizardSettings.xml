@@ -14,8 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_share_24dp" />
-                            <entry key="sourceFile" value="C:\Users\Дмитрий\Desktop\SVG\Ресурс 2.svg" />
+                            <entry key="height" value="3" />
+                            <entry key="outputName" value="ic_touch" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Users\Дмитрий\Desktop\SVG\touch.svg" />
+                            <entry key="width" value="2" />
                           </map>
                         </option>
                       </PersistentState>

@@ -124,4 +124,5 @@ public class MainActivity extends AppCompatActivity implements JsonSaver, Linear
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_right, R.anim.alpha);
     }
+
 }

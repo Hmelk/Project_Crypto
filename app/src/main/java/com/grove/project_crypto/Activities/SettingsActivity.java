@@ -36,10 +36,6 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    /**
-     * A preference value change listener that updates the preference's summary
-     * to reflect its new value.
-     */
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
@@ -123,39 +119,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
     }
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
+        private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
     }
 
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
@@ -163,10 +144,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         @Override

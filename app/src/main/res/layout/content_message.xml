@@ -28,7 +28,8 @@
         android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pv"
@@ -77,7 +78,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/bgd_button"
         android:padding="5dp"
-        android:text="Encrypted"
+        android:text="@string/encrypted"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -100,7 +101,7 @@
             android:id="@+id/et_sk"
             android:layout_width="196dp"
             android:layout_height="59dp"
-            android:hint="Secret key" />
+            android:hint="@string/secret_key" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -122,7 +123,7 @@
             android:id="@+id/et_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Initialisation vector" />
+            android:hint="@string/initialisation_vector" />
     </android.support.design.widget.TextInputLayout>
 
     <!--<RadioButton-->
@@ -171,7 +172,7 @@
         android:background="@drawable/bgd_button"
         android:onClick="onSKGenerate"
         android:padding="5dp"
-        android:text="Generate"
+        android:text="@string/generate"
         app:layout_constraintBottom_toBottomOf="@+id/SecretKeyInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/SecretKeyInputLayout" />
@@ -185,7 +186,7 @@
         android:background="@drawable/bgd_button"
         android:onClick="onIVGenerate"
         android:padding="5dp"
-        android:text="Generate"
+        android:text="@string/generate"
         android:enabled="false"
         app:layout_constraintBottom_toBottomOf="@+id/IVInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -202,7 +203,8 @@
         android:gravity="center"
         android:textColor="@color/textFirst"
         app:layout_constraintEnd_toEndOf="@+id/SecretKeyInputLayout"
-        app:layout_constraintTop_toTopOf="@+id/SecretKeyInputLayout" />
+        app:layout_constraintTop_toTopOf="@+id/SecretKeyInputLayout"
+        tools:ignore="HardcodedText" />
 
     <FrameLayout
         android:id="@+id/frame_addParam"

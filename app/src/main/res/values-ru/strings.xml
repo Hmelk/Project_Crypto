@@ -1,17 +1,17 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Project_Crypto</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_author">About author</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_author">Об авторе</string>
+    <string name="title_activity_settings">Настройки</string>
 
 
     <!--My Strings-->
 
 
     <string-array name="type">
-        <item>Text</item>
-        <item>Image</item>
-        <item>File</item>
+        <item>Текст</item>
+        <item>Изображение</item>
+        <item>Файл</item>
     </string-array>
 
     <string-array name="method_encrypted">
@@ -31,9 +31,9 @@
     <string name="rsa">RSA</string>
     <string name="blowfish">BlowFish</string>
 
-    <string name="by_phone">Encrypt by phone</string>
-    <string name="by_gps">Encrypt by GPS</string>
-    <string name="self_key">Self Key</string>
+    <string name="by_phone">Шифровать по телефону</string>
+    <string name="by_gps">Шифровать по GPS</string>
+    <string name="self_key">Собственный ключ</string>
 
     <!-- Strings related to Settings -->
 
@@ -97,6 +97,7 @@
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
+
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
@@ -107,24 +108,22 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="default_text">To-do</string>
-    <string name="add_text">Text</string>
-    <string name="add_image">Image</string>
-    <string name="add_file">File</string>
-    <string name="add_existing">Open</string>
+    <string name="add_text">Текст</string>
+    <string name="add_image">Изображение</string>
+    <string name="add_file">Фаил</string>
+    <string name="add_existing">Открыть</string>
     <string name="title_activity_message">MessageActivity</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_view_item">ViewItemActivity</string>
-    <string name="title_refactor">Refactor</string>
-    <string name="title_share">Share</string>
-    <string name="title_delete">Delete</string>
-    <string name="encrypted">Encrypted</string>
-    <string name="secret_key">Secret Key</string>
-    <string name="initialisation_vector">Initialisation vector</string>
-    <string name="generate">Generate</string>
-    <string name="message">Message</string>
-    <string  name="raw_message" >Raw message</string>
+    <string name="title_refactor">Изменить</string>
+    <string name="title_share">Поделиться</string>
+    <string name="title_delete">Удалить</string>
+    <string name="secret_key">Ключ</string>
+    <string name="encrypted">Шифровать</string>
+    <string name="initialisation_vector">Вектор инициализации</string>
+    <string name="generate">Генерировать</string>
+    <string name="message">Введите текст</string>
+    <string name="raw_message">Исходное сообщение</string>
 
 </resources>

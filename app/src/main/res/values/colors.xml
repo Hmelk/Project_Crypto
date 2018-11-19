@@ -9,7 +9,12 @@
     <color name="textFirst" >#d2071f43</color>
     <color name="colorGrey" >#454950</color>
 
-    <!---    <color name="colorPrimaryDark">#225858</color>
+
+
+        <color name="tpTColor">#1a861a</color>
+        <color name="tpIColor">#ae6118</color>
+        <color name="tpFColor">#8c1919</color>
+        <!---    <color name="colorPrimaryDark">#225858</color>
         <color name="colorPrimary">#253c5e</color>
         <color name="colorPrimaryGrey">#212e32</color>
         <color name="colorAccent">#dfeaf7</color> -->
