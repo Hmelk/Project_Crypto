@@ -1,47 +1,63 @@
 package com.grove.project_crypto.CryptoHelper;
 
 import android.util.Base64;
+import android.util.Log;
 
+import java.math.BigInteger;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 
 
 public class CryptoHelper {
-    private SecretKey secretKey;
 
     public CryptoHelper() {
 
     }
 
-    public String makeAes(String rawMessage,SecretKey secretKey, int cipherMode) {
-        this.secretKey = secretKey;
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(128);
+    public String makeAes(String rawMessage, IvParameterSpec ivSpec, SecretKey secretKey, int cipherMode) {
 
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            byte[] inputByte = rawMessage.getBytes("UTF-8");
+            byte[] inputByte = hex2Byte(rawMessage); //rawMessage.getBytes("UTF-8");
 
-            if(cipherMode == Cipher.DECRYPT_MODE) {
-                cipher.init(Cipher.DECRYPT_MODE, secretKey);
-                return byte2Hex(cipher.doFinal(Base64.decode(inputByte, Base64.DEFAULT)));
-            }else {
-                cipher.init(Cipher.ENCRYPT_MODE, this.secretKey);
-                return byte2Hex (Base64.encode(cipher.doFinal(inputByte), Base64.DEFAULT));
+            if (cipherMode == Cipher.DECRYPT_MODE) {
+                cipher.init(Cipher.DECRYPT_MODE, secretKey,ivSpec);
+                byte[] b = Base64.decode(rawMessage, Base64.NO_WRAP);
+//                int a = b.length;
+//                byte[] ne = new byte[16];
+//                System.arraycopy(b, 0, ne, 0, 16);
+                byte[] plaintext = cipher.doFinal(b);
+                return new String(plaintext, "UTF-8");
+//                return byte2Hex(cipher.doFinal(b));
+            } else {
+                cipher.init(Cipher.ENCRYPT_MODE, secretKey,ivSpec);
+                return byte2Hex(Base64.encode(cipher.doFinal(inputByte), Base64.NO_WRAP));
             }
-         } catch (Exception e) {
+
+        } catch (InvalidKeyException e) {
             e.printStackTrace();
             return null;
+        } catch (Exception e) {
+            Log.e("TAG", "makeAes: ", e);
+            return null;
         }
+    }
+
+    private static String hex2ASCII(String hex) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < hex.length(); i += 2) {
+            String str = hex.substring(i, i + 2);
+            output.append((char) Integer.parseInt(str, 16));
+        }
+        return output.toString();
     }
 
     public static byte[] hex2Byte(String str) {
@@ -57,8 +73,7 @@ public class CryptoHelper {
     }
 
 
-
-    public static byte hex2Byte(char a1, char a2) {
+    private static byte hex2Byte(char a1, char a2) {
         int k;
         if (a1 >= '0' && a1 <= '9') k = a1 - 48;
         else if (a1 >= 'a' && a1 <= 'f') k = (a1 - 97) + 10;
@@ -72,11 +87,11 @@ public class CryptoHelper {
         return (byte) (k & 0xff);
     }
 
-    public static String byte2Hex(byte b[]) {
+    private static String byte2Hex(byte b[]) {
         String hs = "";
         String stmp = "";
-        for (int n = 0; n < b.length; n++) {
-            stmp = Integer.toHexString(b[n] & 0xff);
+        for (byte aB : b) {
+            stmp = Integer.toHexString(aB & 0xff);
             if (stmp.length() == 1)
                 hs = hs + "0" + stmp;
             else
@@ -87,33 +102,6 @@ public class CryptoHelper {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //

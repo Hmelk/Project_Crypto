@@ -1,7 +1,6 @@
 package com.grove.project_crypto;
 
 import android.annotation.SuppressLint;
-import android.graphics.Paint;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,7 +18,7 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
     private int position;
     private ActionListener actionListener;
     private boolean sks;
-    private CryptoClass item;
+    private Encrypted item;
 
 
     LinearViewHolder(View itemView) {
@@ -34,7 +33,7 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
         OnClickListener secretKeyShowListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!sks) key.setText(item.getSecretKey());
+                if (!sks) key.setText(item.getSecretKey().getEncoded().toString());
                 else key.setText("");
                 sks = !sks;
             }
@@ -49,15 +48,15 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
     }
 
     @SuppressLint("SetTextI18n")
-    void bindView(CryptoClass item, int position, ActionListener listener) {
+    void bindView(Encrypted item, int position, ActionListener listener) {
         actionListener = listener;
         this.position = position;
         this.item = item;
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+//        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         title.setText(item.getTitle());
         message.setText(item.getMessage());
         type.setText(item.getCryptoMethod());
-        data.setText(dateFormat.format(item.getDate().getTime()));
+        data.setText(item.getDate());
         imgType.setText(item.getType()+"");
         int color = R.color.tpTColor ;
         switch (item.getType()){

@@ -4,7 +4,7 @@ import android.content.Context;
 
 
 import com.google.gson.Gson;
-import com.grove.project_crypto.CryptoClass;
+import com.grove.project_crypto.Encrypted;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ public class JSONHelper {
    private static final String FILE_DATA_NAME = "data.json";
    private Gson gson;
 
- public  static boolean exportToJSON(Context context, LinkedList<CryptoClass> dataList) {
+ public  static boolean exportToJSON(Context context, LinkedList<Encrypted> dataList) {
 
        Gson gson = new Gson();
        DataItems dataItems = new DataItems();
@@ -45,7 +45,7 @@ public class JSONHelper {
        return false;
    }
 
-   public static LinkedList<CryptoClass> importFromJSON(Context context) {
+   public static LinkedList<Encrypted> importFromJSON(Context context) {
 
        InputStreamReader streamReader = null;
        FileInputStream fileInputStream = null;
@@ -80,12 +80,12 @@ public class JSONHelper {
    }
 
    private static class DataItems {
-       private LinkedList<CryptoClass> passwords;
+       private LinkedList<Encrypted> passwords;
 
-       LinkedList<CryptoClass> getData() {
+       LinkedList<Encrypted> getData() {
            return passwords;
        }
-       void setData(LinkedList<CryptoClass> data) {
+       void setData(LinkedList<Encrypted> data) {
            this.passwords = data;
        }
    }

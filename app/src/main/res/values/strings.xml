@@ -125,6 +125,6 @@
     <string name="initialisation_vector">Initialisation vector</string>
     <string name="generate">Generate</string>
     <string name="message">Message</string>
-    <string  name="raw_message" >Raw message</string>
+    <string name="raw_message">Raw message</string>
 
 </resources>

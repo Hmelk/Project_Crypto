@@ -14,21 +14,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import com.grove.project_crypto.CryptoClass;
-import com.grove.project_crypto.Helper.JSONHelper;
-import com.grove.project_crypto.JsonSaver;
+import com.grove.project_crypto.App;
+import com.grove.project_crypto.Encrypted;
+import com.grove.project_crypto.Helper.DataBase;
+import com.grove.project_crypto.Helper.EncryptedDAO;
 import com.grove.project_crypto.LinearViewHolder;
 import com.grove.project_crypto.R;
 import com.grove.project_crypto.ResAdapter;
 
 import java.util.LinkedList;
+import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements JsonSaver, LinearViewHolder.ActionListener {
+public class MainActivity extends AppCompatActivity implements  LinearViewHolder.ActionListener {
+
+//    public static App instance;
+
+    private DataBase database;
+    private EncryptedDAO encryptedDAO;
 
     RecyclerView itemresviews;
 
-    private LinkedList<CryptoClass> CryptoList;
+    private List<Encrypted> CryptoList;
 
     private ResAdapter linearAdapter;
 
@@ -39,9 +46,13 @@ public class MainActivity extends AppCompatActivity implements JsonSaver, Linear
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        CryptoList = new LinkedList<>();
+        database = App.getInstance().getDatabase();
+        encryptedDAO = database.encryptedDAO();
+        CryptoList  = encryptedDAO.getAll();
+
         itemresviews = findViewById(R.id.itemresview);
 
-        CryptoList = new LinkedList<>();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         itemresviews.setLayoutManager(layoutManager);
@@ -53,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements JsonSaver, Linear
         linearAdapter.addHeader(inflateHeader());
         linearAdapter.setActionListener(this);
         itemresviews.setAdapter(linearAdapter);
-        Import();
     }
 
     private View inflateHeader() {
@@ -74,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements JsonSaver, Linear
                 break;
             case (R.id.btn_image):
                 intent = new Intent(MainActivity.this, MessageActivity.class);
+                break;
+            case (R.id.btn_open):
+                intent = new Intent(MainActivity.this, TestedActivity.class);
                 break;
         }
         startActivityForResult(intent, 1);
@@ -101,25 +114,25 @@ public class MainActivity extends AppCompatActivity implements JsonSaver, Linear
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void Export() {
-        JSONHelper.exportToJSON(this, CryptoList);
-    }
-
-    @Override
-    public void Import() {
-        if (JSONHelper.importFromJSON(this) != null) {
-            CryptoList.addAll(JSONHelper.importFromJSON(this));
-            linearAdapter.addAll(CryptoList);
-            linearAdapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    public void Export() {
+//        JSONHelper.exportToJSON(this, CryptoList);
+//    }
+//
+//    @Override
+//    public void Import() {
+//        if (JSONHelper.importFromJSON(this) != null) {
+//            CryptoList.addAll(JSONHelper.importFromJSON(this));
+//            linearAdapter.addAll(CryptoList);
+//            linearAdapter.notifyDataSetChanged();
+//        }
+//    }
 
 
     @Override
     public void OnItemClick(int position) {
         Intent intent = new Intent(MainActivity.this, ViewItemActivity.class);
-        intent.putExtra(CryptoClass.class.getSimpleName(), linearAdapter.getItem(position));
+        intent.putExtra(Encrypted.class.getSimpleName(), linearAdapter.getItem(position));
         intent.putExtra("Position",position);
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_right, R.anim.alpha);

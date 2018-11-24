@@ -11,11 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+
+
 public class DBHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "Password.db";
     private static String DB_PATH = "";
     private static final int DB_VERSION = 14;
-
     private SQLiteDatabase mDataBase;
     private final Context mContext;
     private boolean mNeedUpdate = false;

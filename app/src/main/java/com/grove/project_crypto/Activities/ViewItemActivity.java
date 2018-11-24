@@ -2,30 +2,43 @@ package com.grove.project_crypto.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.grove.project_crypto.CryptoClass;
+import com.grove.project_crypto.App;
+import com.grove.project_crypto.Encrypted;
+import com.grove.project_crypto.CryptoHelper.CryptoHelper;
+import com.grove.project_crypto.Helper.DataBase;
+import com.grove.project_crypto.Helper.EncryptedDAO;
 import com.grove.project_crypto.Helper.JSONHelper;
+import com.grove.project_crypto.InterfaceEncoder;
 import com.grove.project_crypto.JsonSaver;
 import com.grove.project_crypto.R;
 
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.util.LinkedList;
 import java.util.Objects;
 
-public class ViewItemActivity extends AppCompatActivity implements JsonSaver {
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
-    LinkedList<CryptoClass> CryptoList;
+public class ViewItemActivity extends AppCompatActivity implements JsonSaver,InterfaceEncoder {
+
+    LinkedList<Encrypted> CryptoList;
     Toolbar toolbar;
     EditText etRMes, etEncMes;
 
-    CryptoClass item;
+    Encrypted CrItem;
 
     int position;
 
@@ -38,6 +51,7 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver {
                 case R.id.navigation_reafactor:
                     return true;
                 case R.id.navigation_share:
+
                     return true;
                 case R.id.navigation_delete:
                     onRemove();
@@ -60,11 +74,9 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver {
     }
 
     private void onRemove() {
-
-        CryptoList = new LinkedList<>();
-        Import();
-        CryptoList.remove(position);
-        Export();
+        DataBase database = App.getInstance().getDatabase();
+        EncryptedDAO encryptedDAO = database.encryptedDAO();
+        encryptedDAO.delete(CrItem);
         Intent intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_up, R.anim.alpha);
@@ -96,11 +108,12 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver {
         etRMes = findViewById(R.id.Raw_Message);
         etEncMes = findViewById(R.id.Encrypted_Message);
         if (arguments != null) {
-            item = (CryptoClass) arguments.getSerializable(CryptoClass.class.getSimpleName());
+            CrItem = (Encrypted) arguments.getSerializable(Encrypted.class.getSimpleName());
             position = arguments.getInt("Position");
         }
 
-        etRMes.setText(item.getMessage());
+        etRMes.setText(CrItem.getMessage());
+        etEncMes.setText(Decryptor(CrItem.getMessage()));
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -108,10 +121,35 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver {
     }
 
     @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        toolbar.setTitle(item.getTitle());
-        toolbar.setSubtitle(item.getTitle());
+    protected void onResume() {
+        if(toolbar.getTitle() !=  CrItem.getTitle()) toolbar.setTitle(CrItem.getTitle());
+        super.onResume();
     }
 
+    @Override
+    public String Decryptor(String raw) {
+
+        CryptoHelper ch = new CryptoHelper();
+        return ch.makeAes(raw,new IvParameterSpec(new byte[] {} ),CrItem.getSecretKey(), Cipher.DECRYPT_MODE);
+    }
+
+    public static String generateRandomIV() {
+        SecureRandom ranGen = new SecureRandom();
+        byte[] aesKey = new byte[16];
+        ranGen.nextBytes(aesKey);
+        StringBuffer result = new StringBuffer();
+        for (byte b : aesKey) {
+            result.append(String.format("%02x", b));
+        }
+        if (16 > result.toString().length()) {
+            return result.toString();
+        } else {
+            return result.toString().substring(0, 16);
+        }
+    }
+
+    @Override
+    public String Encryptor() {
+        return null;
+    }
 }
