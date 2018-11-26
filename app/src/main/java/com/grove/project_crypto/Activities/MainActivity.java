@@ -2,13 +2,18 @@ package com.grove.project_crypto.Activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +29,7 @@ import com.grove.project_crypto.ResAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements  LinearViewHolder.ActionListener {
@@ -32,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
 
     private DataBase database;
     private EncryptedDAO encryptedDAO;
+    private Locale locale;
+    private String lang;
+    private SharedPreferences preferences;
 
     RecyclerView itemresviews;
 
@@ -45,6 +54,16 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        preferences =  PreferenceManager.getDefaultSharedPreferences(this);;
+         lang = preferences.getString("lang", "default");
+        if (lang.equals("default")) {lang=getResources().getConfiguration().locale.getCountry();}
+        Locale locale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = locale;
+        res.updateConfiguration(conf, dm);
 
         CryptoList = new LinkedList<>();
         database = App.getInstance().getDatabase();
@@ -137,5 +156,6 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_right, R.anim.alpha);
     }
+
 
 }

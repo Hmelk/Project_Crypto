@@ -40,7 +40,7 @@
             android:background="@drawable/underlined"
             android:ems="10"
             android:fontFamily="serif-monospace"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:minHeight="128dp"
             android:selectAllOnFocus="false"
             android:singleLine="true"

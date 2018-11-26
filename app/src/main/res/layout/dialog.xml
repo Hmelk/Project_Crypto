@@ -8,103 +8,63 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/dialog_pager"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="169dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:background="@drawable/bgd_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:id="@+id/constraintLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="169dp"-->
-        <!--android:background="@drawable/bgd_message"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.857"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
 
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_message"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="64dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:ems="10"-->
-        <!--android:gravity="center"-->
-        <!--android:minHeight="128dp"-->
-        <!--android:paddingStart="20dp"-->
-        <!--android:paddingEnd="20dp"-->
-        <!--android:shadowColor="@color/colorAccent"-->
-        <!--android:text="@string/aes_128"-->
-        <!--android:textAlignment="gravity"-->
-        <!--android:typeface="monospace"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout" />-->
+            android:layout_marginTop="44dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<Button-->
-        <!--android:id="@+id/btn_save"-->
-        <!--android:layout_width="32dp"-->
-        <!--android:layout_height="32dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:layout_marginEnd="12dp"-->
-        <!--android:background="@drawable/btn_save"-->
-        <!--android:onClick="onSave"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/choose_a_title"
+            android:textColor="@color/textFirst"
+            android:textSize="23sp"
+            app:layout_constraintBottom_toTopOf="@+id/view3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<Button-->
-        <!--android:id="@+id/btn_copy"-->
-        <!--android:layout_width="32dp"-->
-        <!--android:layout_height="32dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:background="@drawable/ic_copy"-->
-        <!--android:onClick="onCopyInBuffer"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/view3"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/btn_save"-->
-        <!--app:layout_constraintVertical_bias="0.506" />-->
+        <EditText
+            android:id="@+id/etSetTitle"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:focusable="true"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<View-->
-        <!--android:id="@+id/view3"-->
-        <!--android:layout_width="2dp"-->
-        <!--android:layout_height="wrap_content"-->
-
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/btn_save"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--</android.support.constraint.ConstraintLayout>-->
-    </android.support.v4.view.ViewPager>
-
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
 
 
-    <!--<fragment-->
-        <!--android:id="@+id/frag_dialog"-->
-
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-         <!--/>-->
-    <!--tools:layout="@layout/fragment_message"-->
 
 
 
@@ -120,217 +80,3 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!--->
-<!-/-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id="@+id/dialog_rootView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:padding="16dp">-->
-
-    <!--&lt;!&ndash;<android.support.v7.widget.CardView&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_marginStart="2dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_marginTop="2dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_marginEnd="2dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:background="@drawable/bgd_message"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:layout_constraintTop_toTopOf="parent">&ndash;&gt;-->
-
-        <!--<android.support.constraint.ConstraintLayout-->
-            <!--android:id="@+id/constraintLayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="169dp"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--android:background="@drawable/bgd_message"-->
-            <!--app:layout_constraintHorizontal_bias="0.857"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent">-->
-
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_message"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:minHeight="128dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_marginEnd="64dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:ems="10"-->
-                <!--android:gravity="center"-->
-                <!--android:paddingStart="20dp"-->
-                <!--android:paddingEnd="20dp"-->
-                <!--android:shadowColor="@color/colorAccent"-->
-                <!--android:text="@string/aes_128"-->
-                <!--android:textAlignment="gravity"-->
-                <!--android:typeface="monospace"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout" />-->
-
-            <!--<Button-->
-                <!--android:id="@+id/btn_save"-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_marginEnd="12dp"-->
-                <!--android:onClick="onSave"-->
-                <!--android:background="@drawable/btn_save"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--<Button-->
-                <!--android:id="@+id/btn_copy"-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:background="@drawable/ic_copy"-->
-                <!--android:onClick="onCopyInBuffer"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toEndOf="@+id/view3"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/btn_save"-->
-                <!--app:layout_constraintVertical_bias="0.506" />-->
-
-            <!--<View-->
-                <!--android:id="@+id/view3"-->
-                <!--android:layout_width="2dp"-->
-                <!--android:layout_height="wrap_content"-->
-
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:background="@color/colorPrimary"-->
-                <!--app:layout_constraintEnd_toStartOf="@+id/btn_save"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--</android.support.constraint.ConstraintLayout>-->
-    <!--&lt;!&ndash;</android.support.v7.widget.CardView>&ndash;&gt;-->
-
-
-<!--</android.support.constraint.ConstraintLayout>-->
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:id="@+id/dialog_rootView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="#55000000"-->
-    <!--android:padding="32dp" >-->
-
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/contentDialog"-->
-        <!--android:layout_width="401dp"-->
-        <!--android:layout_height="400dp"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:background="@drawable/dialog_background"-->
-        <!--android:padding="24dp">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="24dp"-->
-            <!--android:text="Title"-->
-            <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
-            <!--android:textColor="#000" />-->
-
-
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/relmessage"-->
-            <!--android:layout_width="229dp"-->
-            <!--android:layout_height="227dp"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginStart="24dp"-->
-            <!--android:layout_marginTop="57dp"-->
-            <!--android:layout_marginEnd="24dp">-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/editText"-->
-                <!--android:layout_width="150dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignStart="@+id/relmessage"-->
-                <!--android:layout_alignTop="@+id/relmessage"-->
-                <!--android:layout_marginStart="7dp"-->
-                <!--android:layout_marginTop="7dp"-->
-                <!--android:ems="10"-->
-                <!--android:inputType="textPersonName"-->
-                <!--android:text="Name" />-->
-        <!--</RelativeLayout>-->
-
-
-        <!--&lt;!&ndash;<ScrollView&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/message_scrollView"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_below="@id/title"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:paddingBottom="50dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:scrollbarSize="2dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:scrollbarThumbVertical="@color/colorPrimary">&ndash;&gt;-->
-
-        <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:orientation="vertical">&ndash;&gt;-->
-
-        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/message"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:textColor="#000"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:textSize="18sp" />&ndash;&gt;-->
-        <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-        <!--&lt;!&ndash;</ScrollView>&ndash;&gt;-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignBottom="@id/relmessage"-->
-            <!--android:layout_marginBottom="-54dp"-->
-            <!--android:gravity="right"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<com.gc.materialdesign.views.ButtonFlat-->
-                <!--android:id="@+id/button_cancel"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="#000000"-->
-                <!--android:text="Cancel"-->
-                <!--android:visibility="gone" />-->
-
-            <!--<com.gc.materialdesign.views.ButtonFlat-->
-                <!--android:id="@+id/button_accept"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="#1E88E5"-->
-                <!--android:text="Accept" />-->
-        <!--</LinearLayout>-->
-
-
-    <!--</RelativeLayout>-->
-
-
-<!--</RelativeLayout>-->

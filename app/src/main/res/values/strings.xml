@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Project_Crypto</string>
     <string name="action_settings">Settings</string>
     <string name="action_author">About author</string>
@@ -48,16 +48,22 @@
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
 
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
+    <string name="pref_title_change_lang_of_application">Change language</string>
+    <string-array name="pref_lang_list_titles">
+        <item>Default</item>
+        <item>Russian</item>
+        <item>English</item>
     </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
+    <string-array name="pref_lang_list_values">
         <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="entryvalues_lang">
+        <item>default</item>
+        <item>ru</item>
+        <item>en</item>
     </string-array>
 
     <!-- Example settings for Data & Sync -->
@@ -126,5 +132,8 @@
     <string name="generate">Generate</string>
     <string name="message">Message</string>
     <string name="raw_message">Raw message</string>
+    <string name="additional_encryption_option">Additional encryption option</string>
+    <string name="errPass">Specify password</string>
+    <string name="choose_a_title">Choose a title:</string>
 
 </resources>

@@ -10,4 +10,14 @@
         <item name="android:textColorPrimary">@color/ic_launcher_background</item>
         <item name="android:textColorSecondary">@color/ic_launcher_background</item>
     </style>
+
+    <style name="AppSettingTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/textSecond</item>
+        <item name="android:textColorPrimary">@color/ic_launcher_background</item>
+        <item name="android:textColorSecondary">@color/ic_launcher_background</item>
+        <item name="android:statusBarColor">?android:attr/colorPrimary</item>
+    </style>
 </resources>

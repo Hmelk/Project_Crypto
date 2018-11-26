@@ -7,13 +7,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 public class LinearViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView title, message, key, type, data, imgType;
+    private TextView title, message, password, type, data, imgType;
 
     private int position;
     private ActionListener actionListener;
@@ -25,20 +21,20 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         title = itemView.findViewById(R.id.tv_Title);
         message = itemView.findViewById(R.id.tv_resMessage);
-        key = itemView.findViewById(R.id.tv_SecretKey);
+        password = itemView.findViewById(R.id.tv_SecretKey);
         type = itemView.findViewById(R.id.tv_cr);
         data = itemView.findViewById(R.id.tv_data);
         imgType = itemView.findViewById(R.id.img_type);
         sks = false;
-        OnClickListener secretKeyShowListener = new OnClickListener() {
+        OnClickListener passwordShowListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!sks) key.setText(item.getSecretKey().getEncoded().toString());
-                else key.setText("");
+                if (!sks) password.setText(item.getPassword());
+                else password.setText("");
                 sks = !sks;
             }
         };
-        key.setOnClickListener(secretKeyShowListener);
+        password.setOnClickListener(passwordShowListener);
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +66,7 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
     }
 //        @Override
 //        public void onClick(View v) {
-//            if (!sks) key.setText(item.getSecretKey());
+//            if (!sks) password.setText(item.getPassword());
 //            //if (actionListener != null) actionListener.OnItemClick(position);
 //        }
 

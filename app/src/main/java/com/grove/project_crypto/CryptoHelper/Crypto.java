@@ -23,9 +23,6 @@ public class Crypto {
 
     private static String DELIMITER = "]";
 
-    private static int KEY_LENGTH = 256;
-    // minimum values recommended by PKCS#5, increase as necessary
-    private static int ITERATION_COUNT = 1000;
     private static final int PKCS5_SALT_LENGTH = 8;
 
     private static SecureRandom random = new SecureRandom();
@@ -33,22 +30,16 @@ public class Crypto {
     private Crypto() {
     }
 
-    public static SecretKey deriveKeyPbkdf2(byte[] salt, String password) {
+    public static SecretKey generateKey(byte[] salt, String password) {
         try {
-            long start = System.currentTimeMillis();
+            int ITERATION_COUNT = 1000;
+            int KEY_LENGTH = 128;
             KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt,
                     ITERATION_COUNT, KEY_LENGTH);
             SecretKeyFactory keyFactory = SecretKeyFactory
                     .getInstance(PBKDF2_DERIVATION_ALGORITHM);
             byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
-            Log.d(TAG, "key bytes: " + toHex(keyBytes));
-
-            SecretKey result = new SecretKeySpec(keyBytes, "AES");
-            long elapsed = System.currentTimeMillis() - start;
-            Log.d(TAG, String.format("PBKDF2 key derivation took %d [ms].",
-                    elapsed));
-
-            return result;
+            return new SecretKeySpec(keyBytes, "AES");
         } catch (GeneralSecurityException e) {
             throw new RuntimeException(e);
         }
@@ -57,22 +48,20 @@ public class Crypto {
     public static byte[] generateIv(int length) {
         byte[] b = new byte[length];
         random.nextBytes(b);
-
         return b;
     }
 
     public static byte[] generateSalt() {
         byte[] b = new byte[PKCS5_SALT_LENGTH];
         random.nextBytes(b);
-
         return b;
     }
 
-   public static String encrypt(String plaintext, SecretKey key, byte[] salt) {
+   public static String encrypt(String plaintext, SecretKey key,byte[] iv, byte[] salt) {
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 
-            byte[] iv = generateIv(cipher.getBlockSize());
+//            byte[] iv = generateIv(cipher.getBlockSize());
             Log.d(TAG, "IV: " + toHex(iv));
             IvParameterSpec ivParams = new IvParameterSpec(iv);
             cipher.init(Cipher.ENCRYPT_MODE, key, ivParams);
@@ -133,7 +122,7 @@ public class Crypto {
         byte[] salt = fromBase64(fields[0]);
         byte[] iv = fromBase64(fields[1]);
         byte[] cipherBytes = fromBase64(fields[2]);
-        SecretKey key = deriveKeyPbkdf2(salt, password);
+        SecretKey key = generateKey(salt, password);
 
         return decrypt(cipherBytes, key, iv);
     }

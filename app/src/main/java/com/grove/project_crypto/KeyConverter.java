@@ -2,12 +2,7 @@ package com.grove.project_crypto;
 
 import android.arch.persistence.room.TypeConverter;
 import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
@@ -28,29 +23,5 @@ public class KeyConverter {
             e.printStackTrace();
         }
         return null;
-//        final String password = "test";
-//        int pswdIterations = 65536;
-//        int keySize = 128;
-//        byte[] ivBytes;
-//        byte[] saltBytes = {0,1,2,3,4,5,6};
-//
-//        SecretKeyFactory factory = null;
-//        try {
-//            factory = SecretKeyFactory.getInstance("PBEwithMD5AND128BITAES-CBC-OPENSSL");
-//        } catch (NoSuchAlgorithmException e) {}
-//
-//        PBEKeySpec spec = new PBEKeySpec(
-//                password.toCharArray(),
-//                saltBytes,
-//                pswdIterations,
-//                keySize
-//        );
-//        try {
-//            secretKey = factory.generateSecret(spec);
-//        } catch (InvalidKeySpecException e) {
-//            e.printStackTrace();
-//        }
-
-//        return  new SecretKeySpec(secretKey.getEncoded(),"AES");
     }
 }

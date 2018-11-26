@@ -6,82 +6,63 @@ import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.grove.project_crypto.App;
+import com.grove.project_crypto.CryptoHelper.Encryptor;
 import com.grove.project_crypto.Encrypted;
-import com.grove.project_crypto.CryptoHelper.CryptoHelper;
 import com.grove.project_crypto.Helper.DataBase;
 import com.grove.project_crypto.Helper.EncryptedDAO;
-import com.grove.project_crypto.Helper.JSONHelper;
-import com.grove.project_crypto.JsonSaver;
 import com.grove.project_crypto.Pagers.DialogPages;
 import com.grove.project_crypto.Pagers.PageItem;
 import com.grove.project_crypto.Pagers.SwipeItemsAdapter;
 import com.grove.project_crypto.R;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.KeyStoreSpi;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.spec.InvalidKeySpecException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 
-public class MessageActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, JsonSaver {
+public class MessageActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
 
     private EditText etMessage;
-    private EditText etSecretKey;
-    private EditText etIV;
+    private EditText etPassword;
+    private TextView tvEMessage;
     Button btnEncrypt;
     Button cib;
     SwipeItemsAdapter methodadapter;
     List<PageItem> MethodEncryptedItems;
-    List<PageItem> TypeEncryptedItems;
     SecretKey secretKey;
-    LinkedList<Encrypted> CryptoList;
 
 
     ViewPager ChipherPager;
     DialogPages dialogPages;
-    ViewPager dialogpager;
+    Encryptor encryptor;
 
 
     private boolean mShowingBack = false;
     private String Ct;
-    private String IV;
+    private String password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,13 +73,14 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         etMessage = findViewById(R.id.Message);
-        etSecretKey = findViewById(R.id.et_sk);
-        etIV = findViewById(R.id.et_iv);
+        etPassword = findViewById(R.id.etPassword);
+        tvEMessage = findViewById(R.id.tv_message);
         btnEncrypt = findViewById(R.id.btn_encrypted);
         cib = findViewById(R.id.btn_copy);
 
+        encryptor = new Encryptor();
+
         MethodEncryptedItems = new ArrayList<>();
-        TypeEncryptedItems = new ArrayList<>();
         fillList();
 
         ChipherPager = findViewById(R.id.pv);
@@ -107,22 +89,7 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
         ChipherPager.setAdapter(methodadapter);
 
         btnEncrypt.setOnClickListener(onEncrypt);
-        etSecretKey.addTextChangedListener(new TextWatcher() {
-            private String current = "";
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            public void afterTextChanged(Editable s) {
-                try {
-
-                } catch (IndexOutOfBoundsException e) {
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-        });
         if (savedInstanceState == null) {
             getFragmentManager()
                     .beginTransaction()
@@ -132,7 +99,6 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
             mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
         }
         getFragmentManager().addOnBackStackChangedListener(this);
-
     }
 
 
@@ -144,7 +110,14 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
 
     private View.OnClickListener onEncrypt = new View.OnClickListener() {
         public void onClick(View v) {
-            buildDialog();
+            password = etPassword.getText().toString();
+            if (!password.isEmpty()) {
+                secretKey = encryptor.deriveKey(password);
+                byte[] iv = encryptor.generateIV(16);
+                String rowMessage = etMessage.getText().toString();
+                Ct = encryptor.encrypt(rowMessage, secretKey, iv);
+                tvEMessage.setText(Ct);
+            }else Snackbar.make(v,getResources().getString(R.string.errPass),Snackbar.LENGTH_SHORT).show();
         }
     };
 
@@ -157,75 +130,34 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
     }
 
     public void onSave(View v) {
-        //CryptoList = new LinkedList<>();
-//        Import();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-//        dateFormat.format(new Date().getTime());
-        //CryptoList.addFirst(
-          Encrypted encrypted = new Encrypted(App.getInstance().getDatabase().encryptedDAO().getAll().size()+1,"Example",
-                MethodEncryptedItems.get(ChipherPager.getCurrentItem()).getValue(),'I', Ct, dateFormat.format(new Date().getTime()), secretKey);
-        DataBase database = App.getInstance().getDatabase();
-        EncryptedDAO encryptedDAO = database.encryptedDAO();
-        encryptedDAO.insert(encrypted);
-
-//        KeyStore ks = null;
-//        try {
-//            ks = KeyStore.getInstance(KeyStore.getDefaultType());
-//            ks.load(null);
-//        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
-//            e.printStackTrace();
-//        }
-
-//        char[] password =
-//        KeyStore.ProtectionParameter protParam =
-//                new KeyStore.PasswordProtection();
-
-//
-//        KeyStore.SecretKeyEntry keyEntry = new KeyStore.SecretKeyEntry(secretKey);
-//        try {
-//            assert ks != null;
-//            ks.setEntry("SK", keyEntry, null);
-//        } catch (KeyStoreException e) {
-//            e.printStackTrace();
-//        }
-
-
-//        Export();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivityForResult(intent, 1);
-        overridePendingTransition(R.anim.slide_up, R.anim.alpha);
-    }
-
-    private void buildDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        CryptoHelper ch = new CryptoHelper();
-        String rowMessage = etMessage.getText().toString();
-
-       // Ct = ch.makeAes(rowMessage,new IvParameterSpec(new byte[] {} ), secretKey, Cipher.ENCRYPT_MODE);
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog, (ViewGroup) findViewById(R.id.dialog_rootView), false);
-
-        dialogpager = dialogView.findViewById(R.id.dialog_pager);
-        dialogPages = new DialogPages(this);
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        dialogPages.setItems(list, Ct);
-        dialogpager.setAdapter(dialogPages);
-
-        dialogpager.beginFakeDrag();
-
+        final View dialogView = inflater.inflate(R.layout.dialog, (ViewGroup) findViewById(R.id.dialog_rootView), false);
+        final EditText etTitle = dialogView.findViewById(R.id.etSetTitle);
         builder.setView(dialogView);
-
-
         builder.setTitle("Encrypted Message");
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+                Encrypted encrypted = new Encrypted(App.getInstance().getDatabase().encryptedDAO().getAll().size() + 1,etTitle.getText().toString(),
+                        MethodEncryptedItems.get(ChipherPager.getCurrentItem()).getValue(), 'T', Ct, dateFormat.format(new Date().getTime()), password);
+                DataBase database = App.getInstance().getDatabase();
+                EncryptedDAO encryptedDAO = database.encryptedDAO();
+                encryptedDAO.insert(encrypted);
+                Intent intent = new Intent(MessageActivity.this, MainActivity.class);
+                startActivityForResult(intent, 1);
+                overridePendingTransition(R.anim.slide_up, R.anim.alpha);
+            }
+        });
         builder.setNegativeButton("Cancel", null);
         AlertDialog dialog = builder.create();
         Objects.requireNonNull(dialog.getWindow()).getAttributes().windowAnimations = R.style.DialogTheme;
 
-
         dialog.show();
+
+
     }
 
 
@@ -241,59 +173,6 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
         }
     }
 
-
-    public void onSKGenerate(View view) {
-
-        secretKey = SKGenerate();
-
-        etSecretKey.setText(secretKey.getEncoded().toString());
-//        try {
-//            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-//            keyGenerator.init(128);
-//            secretKey = keyGenerator.generateKey();
-//            byte[] a =  secretKey.getEncoded();
-//            String s = secretKey.getEncoded().toString();
-//            etSecretKey.setText(secretKey.getEncoded().toString());
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-    }
-
-    private SecretKey SKGenerate(){
-        final String password = "test";
-        int pswdIterations = 65536;
-        int keySize = 128;
-        byte[] ivBytes;
-        byte[] saltBytes = {0,1,2,3,4,5,6};
-
-        SecretKeyFactory factory = null;
-        try {
-            factory = SecretKeyFactory.getInstance("PBEwithMD5AND128BITAES-CBC-OPENSSL");
-        } catch (NoSuchAlgorithmException e) {}
-
-        PBEKeySpec spec = new PBEKeySpec(
-                password.toCharArray(),
-                saltBytes,
-                pswdIterations,
-                keySize
-        );
-        try {
-            secretKey = factory.generateSecret(spec);
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-
-        return  new SecretKeySpec(secretKey.getEncoded(),"AES");
-
-    }
-
-
-
-    public void onIVGenerate(View view) {
-        IV = generateRandomIV();
-        etIV.setText(IV);
-
-    }
 
     public static String generateRandomIV() {
         SecureRandom ranGen = new SecureRandom();
@@ -332,16 +211,8 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
         }
     }
 
-    @Override
-    public void Export() {
-        JSONHelper.exportToJSON(this, CryptoList);
-    }
-
-    @Override
-    public void Import() {
-        if (JSONHelper.importFromJSON(this) != null) {
-            CryptoList.addAll(JSONHelper.importFromJSON(this));
-        }
+    public void onShowPassword(View view) {
+        etPassword.setInputType(etPassword.getInputType() == 129 ?  1  :  129);
     }
 
 

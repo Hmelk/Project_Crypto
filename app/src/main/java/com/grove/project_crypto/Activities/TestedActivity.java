@@ -1,29 +1,23 @@
 package com.grove.project_crypto.Activities;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.grove.project_crypto.CryptoHelper.Crypto;
-import com.grove.project_crypto.CryptoHelper.CryptoHelper;
+
+import com.grove.project_crypto.CryptoHelper.Encryptor;
 import com.grove.project_crypto.R;
-
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import java.util.Locale;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 
 public class TestedActivity extends AppCompatActivity {
 
@@ -32,31 +26,10 @@ public class TestedActivity extends AppCompatActivity {
     EditText ed1;
 
     SecretKey secretKey;
-    IvParameterSpec ivParameterSpec;
-    CryptoHelper ch;
+/*    IvParameterSpec ivParameterSpec;
+    CryptoHelper ch;*/
 
     private static SecureRandom random = new SecureRandom();
-
-
-
-    private class Encryptor {
-        SecretKey key;
-          public SecretKey deriveKey(String password, byte[] salt) {
-            return Crypto.deriveKeyPbkdf2(salt, password);
-        }
-
-        public String encrypt(String plaintext, String password) {
-            byte[] salt = Crypto.generateSalt();
-            key = deriveKey(password, salt);
-//            Log.d("TAG", "Generated key: " + getRawKey());
-
-            return Crypto.encrypt(plaintext, key, salt);
-        }
-
-        public String decrypt(String ciphertext, String password) {
-            return Crypto.decryptPbkdf2(ciphertext, password);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,25 +40,28 @@ public class TestedActivity extends AppCompatActivity {
         tv1 = findViewById(R.id.tv1);
         ed1 = findViewById(R.id.ed1);
 
-       ch = new CryptoHelper();
-        secretKey = SKGenerate();
+//       ch = new CryptoHelper();
+//        secretKey = SKGenerate();
         final Encryptor encryptor = new Encryptor();
-
-//        SecureRandom sr = null;
-//        try {
-//            sr = SecureRandom.getInstance("SHA1PRNG");
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-//        final byte[] iv = sr.generateSeed(16);
-        ivParameterSpec = new IvParameterSpec(generateIv(16));
+//        ivParameterSpec = new IvParameterSpec(generateIv(16));
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String rowMessage = ed1.getText().toString();
-                String st =  encryptor.encrypt(rowMessage, "password");  //ch.makeAes(rowMessage,ivParameterSpec, secretKey, Cipher.ENCRYPT_MODE);
-                tv1.setText(st);
+//                Locale myLocale = new Locale("ru");
+//                Resources res = getResources();
+//                DisplayMetrics dm = res.getDisplayMetrics();
+//                Configuration conf = res.getConfiguration();
+//                conf.locale = myLocale;
+//                res.updateConfiguration(conf, dm);
+//                Intent refresh = new Intent(TestedActivity.class ,MainActivity.class);
+//                startActivity(refresh);
+//                finish();
+////                String rowMessage = ed1.getText().toString();
+//                secretKey =  encryptor.deriveKey("password");
+//                byte[] iv = encryptor.generateIV(16);
+//                String st =  encryptor.encrypt(rowMessage,secretKey,iv);  //ch.makeAes(rowMessage,ivParameterSpec, secretKey, Cipher.ENCRYPT_MODE);
+//                tv1.setText(st);
             }
         });
 
@@ -100,7 +76,7 @@ public class TestedActivity extends AppCompatActivity {
 
     }
 
-    public static byte[] generateIv(int length) {
+/*    public static byte[] generateIv(int length) {
         byte[] b = new byte[length];
         random.nextBytes(b);
 
@@ -109,7 +85,7 @@ public class TestedActivity extends AppCompatActivity {
 
     private SecretKey SKGenerate(){
         final String password = "password";
-        int pswdIterations = 65536;
+        int pswdIterations = 1000;
         int keySize = 128;
         byte[] ivBytes;
         byte[] saltBytes = new byte[8];
@@ -145,7 +121,7 @@ public class TestedActivity extends AppCompatActivity {
 //
         return  null;
 
-    }
+    }*/
 
 
 }

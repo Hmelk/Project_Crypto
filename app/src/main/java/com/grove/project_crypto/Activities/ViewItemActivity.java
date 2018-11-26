@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.grove.project_crypto.App;
+import com.grove.project_crypto.CryptoHelper.Encryptor;
 import com.grove.project_crypto.Encrypted;
 import com.grove.project_crypto.CryptoHelper.CryptoHelper;
 import com.grove.project_crypto.Helper.DataBase;
@@ -39,6 +40,7 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver,Int
     EditText etRMes, etEncMes;
 
     Encrypted CrItem;
+    Encryptor encryptor;
 
     int position;
 
@@ -112,8 +114,10 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver,Int
             position = arguments.getInt("Position");
         }
 
+        encryptor = new Encryptor();
+
         etRMes.setText(CrItem.getMessage());
-        etEncMes.setText(Decryptor(CrItem.getMessage()));
+        etEncMes.setText(encryptor.decrypt(CrItem.getMessage(),CrItem.getPassword()));
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -129,8 +133,9 @@ public class ViewItemActivity extends AppCompatActivity implements JsonSaver,Int
     @Override
     public String Decryptor(String raw) {
 
-        CryptoHelper ch = new CryptoHelper();
-        return ch.makeAes(raw,new IvParameterSpec(new byte[] {} ),CrItem.getSecretKey(), Cipher.DECRYPT_MODE);
+//        CryptoHelper ch = new CryptoHelper();
+//        return ch.makeAes(raw,new IvParameterSpec(new byte[] {} ),CrItem.getPassword(), Cipher.DECRYPT_MODE);
+        return null;
     }
 
     public static String generateRandomIV() {
