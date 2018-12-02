@@ -124,9 +124,14 @@
     <string name="initialisation_vector">Вектор инициализации</string>
     <string name="generate">Генерировать</string>
     <string name="message">Введите текст</string>
-    <string name="raw_message">Исходное сообщение</string>
+    <string name="raw_message">Зашифрованное сообщение</string>
     <string name="additional_encryption_option">Дополнительные параметры шифрования</string>
     <string name="errPass">Укажите пароль</string>
     <string name="choose_a_title">Введите название:</string>
+    <string name="password">Пароль</string>
+    <string name="Encrypted_message">Исходное сообщение</string>
+    <string name="time">Время</string>
+    <string name="gps">GPS</string>
+    <string name="imei">IMEI</string>
 
 </resources>

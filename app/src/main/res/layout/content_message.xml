@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activities.MessageActivity"
+    tools:context=".activities.MessageActivity"
     tools:showIn="@layout/activity_message">
 
 
@@ -27,10 +27,10 @@
 
     <Button
         android:id="@+id/page_left"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/ic_arrow_back"
+        android:background="@drawable/ic_left_arrow"
         android:onClick="onPageArrowChange"
         app:layout_constraintBaseline_toBaselineOf="@+id/page_right"
         app:layout_constraintEnd_toStartOf="@+id/pv"
@@ -40,13 +40,12 @@
 
     <Button
         android:id="@+id/page_right"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_arrow_back"
+        android:background="@drawable/ic_right_arrow"
         android:onClick="onPageArrowChange"
-        android:rotation="180"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pv"
@@ -60,9 +59,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/bgd_button"
+        android:fontFamily="@font/tinos_bold"
         android:padding="5dp"
         android:text="@string/encrypted"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_addParam" />
@@ -99,11 +100,11 @@
         <EditText
             android:id="@+id/Message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="128dp"
             android:background="@color/empty_bgd"
             android:ems="10"
-            android:fontFamily="serif-monospace"
-            android:hint="Message"
+            android:fontFamily="@font/tinos"
+            android:hint="@string/message"
             android:inputType="textMultiLine"
             android:minHeight="128dp"
             android:paddingStart="20dp"
@@ -119,7 +120,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:orientation="horizontal">
 
             <EditText
@@ -129,7 +130,8 @@
                 android:layout_weight="5"
                 android:background="@color/empty_bgd"
                 android:ems="10"
-                android:hint="Password"
+                android:fontFamily="@font/tinos"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
@@ -177,6 +179,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bgd_message"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -192,12 +195,12 @@
             android:layout_marginEnd="64dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
+            android:fontFamily="@font/tinos"
             android:gravity="center"
             android:minHeight="128dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:shadowColor="@color/colorAccent"
-            android:text="@string/aes_128"
             android:textAlignment="gravity"
             android:typeface="monospace"
             app:layout_constraintBottom_toBottomOf="parent"

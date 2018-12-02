@@ -14,13 +14,14 @@
 
         <CheckBox
             android:id="@+id/checkBox3"
+            android:tag="ExOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:checked="false"
             android:focusable="auto"
             android:padding="4dp"
-            android:text="Time"
+            android:text="@string/time"
             app:layout_constraintBaseline_toBaselineOf="@+id/checkBox2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -28,12 +29,13 @@
 
         <CheckBox
             android:id="@+id/checkBox2"
+            android:tag="ExOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:focusable="auto"
             android:padding="4dp"
-            android:text="GPS"
+            android:text="@string/gps"
             app:layout_constraintBaseline_toBaselineOf="@+id/checkBox"
             app:layout_constraintEnd_toStartOf="@+id/checkBox3"
             app:layout_constraintHorizontal_bias="0.5"
@@ -41,6 +43,7 @@
 
         <CheckBox
             android:id="@+id/checkBox"
+            android:tag="ExOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -48,7 +51,7 @@
             android:layout_marginBottom="8dp"
             android:focusable="auto"
             android:padding="4dp"
-            android:text="IMEI"
+            android:text="@string/imei"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/checkBox2"
             app:layout_constraintHorizontal_bias="0.5"

@@ -2,7 +2,7 @@ package com.grove.project_crypto;
 
 import android.view.View;
 
-public class ResAdapter extends RecyclerBindableAdapter<Encrypted, LinearViewHolder> {
+public class ResAdapter extends RecyclerBindableAdapter<EncryptedClass, LinearViewHolder> {
     private LinearViewHolder.ActionListener actionListener;
 
 

@@ -1,4 +1,4 @@
-package com.grove.project_crypto.Activities;
+package com.grove.project_crypto.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

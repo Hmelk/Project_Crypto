@@ -1,4 +1,4 @@
-package com.grove.project_crypto.Activities;
+package com.grove.project_crypto.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,64 +10,24 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.grove.project_crypto.R;
 
 import java.util.List;
-import java.util.Locale;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
-     /*   private SharedPreferences preferences;
-
-
-
-    @Override
-    public void onCreate() {
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        lang = preferences.getString("lang", "default");
-        if (lang.equals("default")) {lang=getResources().getConfiguration().locale.getCountry();}
-        locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
-    }
-}*/
-
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
-            String lang;
-            Locale locale;
-
             if (preference instanceof ListPreference) {
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
-
-   /*             lang = preference.getString("lang", "default");
-                if (lang.equals("default")) {lang=getResources().getConfiguration().locale.getCountry();}
-                locale = new Locale(lang);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;*/
-
-
-
-                preference.setSummary(
+                Toast.makeText(preference.getContext(), "Перезагрузите приложение", Toast.LENGTH_SHORT).show();
+preference.setSummary(
                         index >= 0
                                 ? listPreference.getEntries()[index]
                                 : null);

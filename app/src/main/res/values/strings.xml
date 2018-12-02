@@ -135,5 +135,12 @@
     <string name="additional_encryption_option">Additional encryption option</string>
     <string name="errPass">Specify password</string>
     <string name="choose_a_title">Choose a title:</string>
+    <string name="password">Password</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_file">FileActivity</string>
+    <string name="Encrypted_message">Encrypted message</string>
+    <string name="time">Time</string>
+    <string name="gps">GPS</string>
+    <string name="imei">IMEI</string>
 
 </resources>

@@ -36,7 +36,7 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
 //        View dialogView = inflater.inflate(R.layout.fragment_save,(ViewGroup) getActivity().findViewById(R.id.frag_save), false );
 //        LayoutInflater inflater = this.getLayoutInflater();
 //        builder.setView(dialogView);
-//        builder.setTitle("Encrypted Message");
+//        builder.setTitle("EncryptedClass Message");
 //        builder.setPositiveButton("OK", null);
 //        return builder.create();
 //        }

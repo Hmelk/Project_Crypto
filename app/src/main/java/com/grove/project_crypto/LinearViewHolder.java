@@ -14,7 +14,7 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
     private int position;
     private ActionListener actionListener;
     private boolean sks;
-    private Encrypted item;
+    private EncryptedClass item;
 
 
     LinearViewHolder(View itemView) {
@@ -38,19 +38,20 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (actionListener != null) actionListener.OnItemClick(position);
+                if (actionListener != null) actionListener.OnItemClick(item.getId());
             }
         });
     }
 
     @SuppressLint("SetTextI18n")
-    void bindView(Encrypted item, int position, ActionListener listener) {
+    void bindView(EncryptedClass item, int position, ActionListener listener) {
         actionListener = listener;
         this.position = position;
         this.item = item;
 //        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         title.setText(item.getTitle());
-        message.setText(item.getMessage());
+
+        message.setText(item.getMessage().length() > 256 ? item.getMessage().substring(0,256) + "..." : item.getMessage());
         type.setText(item.getCryptoMethod());
         data.setText(item.getDate());
         imgType.setText(item.getType()+"");
@@ -72,6 +73,6 @@ public class LinearViewHolder extends RecyclerView.ViewHolder {
 
 
     public interface ActionListener {
-        void OnItemClick(int position);
+        void OnItemClick(long id);
     }
 }

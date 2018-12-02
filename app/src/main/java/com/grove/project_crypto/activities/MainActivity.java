@@ -1,4 +1,4 @@
-package com.grove.project_crypto.Activities;
+package com.grove.project_crypto.activities;
 
 
 import android.content.Intent;
@@ -17,35 +17,22 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
 import com.grove.project_crypto.App;
-import com.grove.project_crypto.Encrypted;
+import com.grove.project_crypto.EncryptedClass;
 import com.grove.project_crypto.Helper.DataBase;
 import com.grove.project_crypto.Helper.EncryptedDAO;
 import com.grove.project_crypto.LinearViewHolder;
+import com.grove.project_crypto.MyLocation;
 import com.grove.project_crypto.R;
 import com.grove.project_crypto.ResAdapter;
-
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements  LinearViewHolder.ActionListener {
 
-//    public static App instance;
 
-    private DataBase database;
-    private EncryptedDAO encryptedDAO;
-    private Locale locale;
-    private String lang;
-    private SharedPreferences preferences;
-
-    RecyclerView itemresviews;
-
-    private List<Encrypted> CryptoList;
-
+    private RecyclerView itemresviews;
     private ResAdapter linearAdapter;
 
     @Override
@@ -55,9 +42,11 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        preferences =  PreferenceManager.getDefaultSharedPreferences(this);;
-         lang = preferences.getString("lang", "default");
-        if (lang.equals("default")) {lang=getResources().getConfiguration().locale.getCountry();}
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        MyLocation.SetUpLocationListener(this);
+        String lang = preferences.getString("lang", "default");
+        if (lang.equals("default")) {
+            lang =getResources().getConfiguration().locale.getCountry();}
         Locale locale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -65,10 +54,10 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
         conf.locale = locale;
         res.updateConfiguration(conf, dm);
 
-        CryptoList = new LinkedList<>();
-        database = App.getInstance().getDatabase();
-        encryptedDAO = database.encryptedDAO();
-        CryptoList  = encryptedDAO.getAll();
+        List<EncryptedClass> cryptoList;
+        DataBase database = App.getInstance().getDatabase();
+        EncryptedDAO encryptedDAO = database.encryptedDAO();
+        cryptoList = encryptedDAO.getAll();
 
         itemresviews = findViewById(R.id.itemresview);
 
@@ -78,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
         itemresviews.setItemAnimator(new DefaultItemAnimator());
 
         linearAdapter = new ResAdapter();
-        if (CryptoList.size() != 0)
-            linearAdapter.addAll(CryptoList);
+        if (cryptoList.size() != 0)
+            linearAdapter.addAll(cryptoList);
         linearAdapter.addHeader(inflateHeader());
         linearAdapter.setActionListener(this);
         itemresviews.setAdapter(linearAdapter);
@@ -99,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
                 intent = new Intent(MainActivity.this, MessageActivity.class);
                 break;
             case (R.id.btn_file):
-                intent = new Intent(MainActivity.this, MessageActivity.class);
+                intent = new Intent(MainActivity.this, FileActivity.class);
                 break;
             case (R.id.btn_image):
-                intent = new Intent(MainActivity.this, MessageActivity.class);
+                intent = new Intent(MainActivity.this, ImageActivity.class);
                 break;
             case (R.id.btn_open):
                 intent = new Intent(MainActivity.this, TestedActivity.class);
@@ -133,26 +122,11 @@ public class MainActivity extends AppCompatActivity implements  LinearViewHolder
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void Export() {
-//        JSONHelper.exportToJSON(this, CryptoList);
-//    }
-//
-//    @Override
-//    public void Import() {
-//        if (JSONHelper.importFromJSON(this) != null) {
-//            CryptoList.addAll(JSONHelper.importFromJSON(this));
-//            linearAdapter.addAll(CryptoList);
-//            linearAdapter.notifyDataSetChanged();
-//        }
-//    }
-
-
     @Override
-    public void OnItemClick(int position) {
+    public void OnItemClick(long id) {
         Intent intent = new Intent(MainActivity.this, ViewItemActivity.class);
-        intent.putExtra(Encrypted.class.getSimpleName(), linearAdapter.getItem(position));
-        intent.putExtra("Position",position);
+      //  intent.putExtra(EncryptedClass.class.getSimpleName(), linearAdapter.getItem(position));
+        intent.putExtra("Position",id);
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_right, R.anim.alpha);
     }

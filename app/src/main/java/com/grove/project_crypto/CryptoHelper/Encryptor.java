@@ -21,6 +21,13 @@ public class Encryptor {
 
         return Crypto.encrypt(plaintext, secretKey,iv, salt);
     }
+    public String encrypt(byte[] plaintext,SecretKey secretKey,byte[] iv) {
+
+//        key = deriveKey(password, salt);
+//            Log.d("TAG", "Generated key: " + getRawKey());
+
+        return Crypto.encrypt(plaintext, secretKey,iv, salt);
+    }
 
     public String decrypt(String ciphertext, String password) {
         return Crypto.decryptPbkdf2(ciphertext, password);

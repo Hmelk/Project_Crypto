@@ -1,5 +1,6 @@
-package com.grove.project_crypto.Activities;
+package com.grove.project_crypto.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -13,20 +14,25 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.grove.project_crypto.App;
 import com.grove.project_crypto.CryptoHelper.Encryptor;
-import com.grove.project_crypto.Encrypted;
+import com.grove.project_crypto.EncryptedClass;
 import com.grove.project_crypto.Helper.DataBase;
 import com.grove.project_crypto.Helper.EncryptedDAO;
+import com.grove.project_crypto.MyLocation;
 import com.grove.project_crypto.Pagers.DialogPages;
 import com.grove.project_crypto.Pagers.PageItem;
 import com.grove.project_crypto.Pagers.SwipeItemsAdapter;
@@ -38,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.crypto.SecretKey;
@@ -111,8 +118,10 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
     private View.OnClickListener onEncrypt = new View.OnClickListener() {
         public void onClick(View v) {
             password = etPassword.getText().toString();
+            Log.i("TAG", "onDecryptClick: "+ password + getExtraOptionPassword());
+
             if (!password.isEmpty()) {
-                secretKey = encryptor.deriveKey(password);
+                secretKey = encryptor.deriveKey(password+getExtraOptionPassword());
                 byte[] iv = encryptor.generateIV(16);
                 String rowMessage = etMessage.getText().toString();
                 Ct = encryptor.encrypt(rowMessage, secretKey, iv);
@@ -120,6 +129,19 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
             }else Snackbar.make(v,getResources().getString(R.string.errPass),Snackbar.LENGTH_SHORT).show();
         }
     };
+//    hrjrj
+    @SuppressLint({"MissingPermission", "HardwareIds"})
+    private String getExtraOptionPassword(){
+        String result = "";
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("H:mm");
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        Map<String,Boolean> map = isExOption();
+        result += map.get(getResources().getString(R.string.imei)) ?   Objects.requireNonNull(telephonyManager).getDeviceId() : "";
+//        result += map.get(getResources().getString(R.string.gps)) ? MyLocation.imHere : "";
+        result += map.get(getResources().getString(R.string.time)) ?  dateFormat.format(new Date()) : "";
+
+        return result;
+    }
 
 
     public void onCopyInBuffer(View v) {
@@ -135,14 +157,14 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
         final View dialogView = inflater.inflate(R.layout.dialog, (ViewGroup) findViewById(R.id.dialog_rootView), false);
         final EditText etTitle = dialogView.findViewById(R.id.etSetTitle);
         builder.setView(dialogView);
-        builder.setTitle("Encrypted Message");
+        builder.setTitle("EncryptedClass Message");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                Encrypted encrypted = new Encrypted(App.getInstance().getDatabase().encryptedDAO().getAll().size() + 1,etTitle.getText().toString(),
-                        MethodEncryptedItems.get(ChipherPager.getCurrentItem()).getValue(), 'T', Ct, dateFormat.format(new Date().getTime()), password);
+                EncryptedClass encrypted = new EncryptedClass(App.getInstance().getDatabase().encryptedDAO().getAll().size() + 1,etTitle.getText().toString(),
+                        MethodEncryptedItems.get(ChipherPager.getCurrentItem()).getValue(), 'T', Ct, dateFormat.format(new Date().getTime()), password,isExOption());
                 DataBase database = App.getInstance().getDatabase();
                 EncryptedDAO encryptedDAO = database.encryptedDAO();
                 encryptedDAO.insert(encrypted);
@@ -154,10 +176,18 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
         builder.setNegativeButton("Cancel", null);
         AlertDialog dialog = builder.create();
         Objects.requireNonNull(dialog.getWindow()).getAttributes().windowAnimations = R.style.DialogTheme;
-
         dialog.show();
+    }
 
-
+    private Map<String,Boolean> isExOption(){
+        CheckBox  cb1 = findViewById(R.id.checkBox);
+        CheckBox  cb2 = findViewById(R.id.checkBox2);
+        CheckBox  cb3 = findViewById(R.id.checkBox3);
+        Map<String,Boolean> map = new ArrayMap<>();
+        map.put("IMEI", cb1 != null && cb1.isChecked());
+        map.put("GPS",cb2 != null && cb2.isChecked());
+        map.put("Time",cb3 != null && cb3.isChecked());
+        return map;
     }
 
 
@@ -240,18 +270,22 @@ public class MessageActivity extends AppCompatActivity implements FragmentManage
     }
 
     private void flipCard() {
-        if (mShowingBack) {
-            getFragmentManager().popBackStack();
-            return;
+        try {
+            if (mShowingBack) {
+                getFragmentManager().popBackStack();
+                return;
+            }
+            mShowingBack = true;
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                    .replace(R.id.frame_addParam, new CardBackFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }catch (Exception e) {
+            Log.e("TAG", "flipCard: ", e);
         }
-        mShowingBack = true;
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(
-                        R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-                .replace(R.id.frame_addParam, new CardBackFragment())
-                .addToBackStack(null)
-                .commit();
     }
 }

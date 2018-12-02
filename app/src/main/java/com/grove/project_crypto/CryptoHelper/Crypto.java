@@ -81,6 +81,29 @@ public class Crypto {
         }
     }
 
+    public static String encrypt(byte[] plaintext, SecretKey key,byte[] iv, byte[] salt) {
+        try {
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+
+//            byte[] iv = generateIv(cipher.getBlockSize());
+            Log.d(TAG, "IV: " + toHex(iv));
+            IvParameterSpec ivParams = new IvParameterSpec(iv);
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivParams);
+            Log.d(TAG, "Cipher IV: "
+                    + (cipher.getIV() == null ? null : toHex(cipher.getIV())));
+
+            if (salt != null) {
+                return String.format("%s%s%s%s%s", toBase64(salt), DELIMITER,
+                        toBase64(iv), DELIMITER, toBase64(plaintext));
+            }
+
+            return String.format("%s%s%s", toBase64(iv), DELIMITER,
+                    toBase64(plaintext));
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static String toHex(byte[] bytes) {
         StringBuffer buff = new StringBuffer();
         for (byte b : bytes) {
@@ -105,12 +128,12 @@ public class Crypto {
             cipher.init(Cipher.DECRYPT_MODE, key, ivParams);
             Log.d(TAG, "Cipher IV: " + toHex(cipher.getIV()));
             byte[] plaintext = cipher.doFinal(cipherBytes);
-            String plainrStr = new String(plaintext, "UTF-8");
 
-            return plainrStr;
-        } catch (GeneralSecurityException | UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            return new String(plaintext, "UTF-8");
+        } catch (Exception e) {
+            Log.e(TAG, "decrypt: ", e);
         }
+        return null;
     }
 
     public static String decryptPbkdf2(String ciphertext, String password) {
